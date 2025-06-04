@@ -16,7 +16,7 @@
 
 .navbar-auth button {
   padding: 8px 14px;
-  background-color: black;
+  background-color: #1f1f1f;
   color: white;
   border: none;
   cursor: pointer;
@@ -24,7 +24,70 @@
   margin-left: 10px;
 }
 
+.navbar-auth button:hover {
+  background-color: black;
+}
+
+.navbar-auth .login {
+  padding: 8px 14px;
+  background-color: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.navbar-auth .login:hover {
+  background-color: #eee;
+}
+
 .navbar-auth .username {
   margin-right: 10px;
   font-weight: 500;
+}
+
+/* Login Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+}
+
+.modal-content input {
+  width: 90%;
+  margin: 10px 0;
+  padding: 8px;
+}
+
+.modal-content button {
+  margin: 10px 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+}
+
+.close-btn {
+  background-color: #ccc;
+  color: black;
+  border-radius: 4px;
 }
