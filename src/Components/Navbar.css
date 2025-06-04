@@ -1,0 +1,30 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background-color: white;
+  border-bottom: 0.5px;
+  border-color: #eeee;
+  color: black;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-auth button {
+  padding: 8px 14px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.navbar-auth .username {
+  margin-right: 10px;
+  font-weight: 500;
+}
