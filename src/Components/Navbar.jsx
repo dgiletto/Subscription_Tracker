@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import trackr_logo from '../Images/trakr_logo.png';
 
@@ -20,6 +21,8 @@ export default function Navbar() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((u) => setUser(u));
     return () => unsub();
@@ -29,6 +32,7 @@ export default function Navbar() {
     try {
       await signInWithPopup(auth, provider);
       setShowForm(false);
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     }
@@ -45,6 +49,7 @@ export default function Navbar() {
       setEmail("");
       setPassword("");
       setError("");
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     }
