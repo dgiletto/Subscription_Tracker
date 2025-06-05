@@ -8,6 +8,7 @@
 .carousel {
     overflow: hidden;
     width: 600px;
+    position: relative;
 }
 
 .wrap {
