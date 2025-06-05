@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import "./Navbar.css";
+import trackr_logo from '../Images/trakr_logo.png';
 
 const provider = new GoogleAuthProvider();
 
@@ -54,7 +55,10 @@ export default function Navbar() {
   return (
     <>
       <nav className="navbar">
-        <div className="navbar-title">Trackr</div>
+        <div className="navbar-left">
+          <img src={trackr_logo} className="navbar-logo" alt=""/>
+          <div className="navbar-title">Trackr</div>
+        </div>
         <div className="navbar-auth">
           {user ? (
             <>

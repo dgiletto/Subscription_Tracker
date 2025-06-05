@@ -4,9 +4,18 @@
   align-items: center;
   padding: 15px 25px;
   background-color: white;
-  border-bottom: 0.5px;
-  border-color: #eeee;
   color: black;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  width: 50px;
+  height: 40px;
+  margin-right: 5px;
 }
 
 .navbar-title {
