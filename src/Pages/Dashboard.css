@@ -10,6 +10,7 @@ table {
     margin: 25px 0;
     font-size: 0.9em;
     min-width: 400px;
+    width: 100%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border-radius: 5px 5px 5px 5px;
     overflow: hidden;
@@ -35,4 +36,71 @@ tbody tr:nth-of-type(odd) {
 
 tbody tr:last-of-type {
     border-bottom: 2px solid #1f1f1f;
+}
+
+.Edit-Btn, .Delete-Btn {
+    padding: 8px 14px;
+    background-color: lightgray;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.Edit-Btn:hover, .Delete-Btn:hover {
+    background-color: #b8b8b8;
+}
+
+.Add-Subscription-Btn {
+    padding: 8px 14px;
+    background-color: #1f1f1f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.Add-Subscription-Btn:hover {
+    background-color: black;
+}
+
+.Modal-Btn {
+    padding: 8px 14px;
+    background-color: #1f1f1f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.Modal-Btn:hover {
+    background-color: black;
+}
+
+.header {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+input, select {
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.flex-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.flex-row > div {
+  flex: 1;
 }

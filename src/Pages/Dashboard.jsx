@@ -28,6 +28,7 @@ export default function Dashboard() {
   });
   const [editingID, setEditingID] = useState(null);
   const [editData, setEditData] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
@@ -111,50 +112,12 @@ const saveEdit = async (id) => {
     <div>
         <Navbar />
         <div className="dashboard-container">
-            <div style={{ margin: "20px 0" }}>
-                <input
-                type="text"
-                placeholder="Name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                />
-                <input
-                type="text"
-                placeholder="Category"
-                value={formData.category}
-                onChange={(e) =>
-                    setFormData({ ...formData, category: e.target.value })
-                }
-                />
-                <select
-                value={formData.billingPeriod}
-                onChange={(e) =>
-                    setFormData({ ...formData, billingPeriod: e.target.value })
-                }
-                >
-                <option>Monthly</option>
-                <option>Yearly</option>
-                <option>Weekly</option>
-                </select>
-                <input
-                type="number"
-                placeholder="Cost"
-                value={formData.cost}
-                onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
-                />
-                <input
-                type="date"
-                placeholder="Next Payment"
-                value={formData.nextPayment}
-                onChange={(e) =>
-                    setFormData({ ...formData, nextPayment: e.target.value })
-                }
-                />
-                <button onClick={addSubscription}>Add Subscription</button>
+            <div style={{ textAlign: "right", marginBottom: "20px" }}>
+                <button className="Add-Subscription-Btn" onClick={() => setShowModal(true)}>+ Add Subscription</button>
             </div>
 
             <h2>Your Subscriptions</h2>
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <table>
                 <thead>
                     <tr>
                     <th>Name</th>
@@ -229,8 +192,8 @@ const saveEdit = async (id) => {
                             <td>{sub.cost}</td>
                             <td>{sub.nextPayment?.toDate().toLocaleDateString()}</td>
                             <td>
-                            <button onClick={() => startEditing(sub)}>Edit</button>
-                            <button onClick={() => deleteSubscription(sub.id)}>Delete</button>
+                            <button className="Edit-Btn" onClick={() => startEditing(sub)}>Edit</button>
+                            <button className="Delete-Btn" onClick={() => deleteSubscription(sub.id)}>Delete</button>
                             </td>
                         </>
                         )}
@@ -238,6 +201,103 @@ const saveEdit = async (id) => {
                     ))}
                 </tbody>
             </table>
+
+            {showModal && (
+                <div style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 1000,
+                }}
+                >
+                    <div
+                    style={{
+                        backgroundColor: "#fff",
+                        padding: "30px",
+                        borderRadius: "10px",
+                        width: "400px",
+                        position: "relative",
+                    }}
+                    >
+                    <button
+                        onClick={() => setShowModal(false)}
+                        style={{
+                        position: "absolute",
+                        top: "10px",
+                        right: "10px",
+                        background: "transparent",
+                        color: "red",
+                        border: "none",
+                        fontSize: "18px",
+                        cursor: "pointer",
+                        }}
+                    >
+                        ✖
+                    </button>
+                    <h2 className="header">Add Subscription</h2>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                        <input
+                        type="text"
+                        placeholder="Name"
+                        value={formData.name}
+                        onChange={(e) =>
+                            setFormData({ ...formData, name: e.target.value })
+                        }
+                        />
+                        <input
+                        type="text"
+                        placeholder="Category"
+                        value={formData.category}
+                        onChange={(e) =>
+                            setFormData({ ...formData, category: e.target.value })
+                        }
+                        />
+                        <input
+                        type="number"
+                        placeholder="Cost"
+                        value={formData.cost}
+                        onChange={(e) =>
+                            setFormData({ ...formData, cost: e.target.value })
+                        }
+                        />
+                        <div className="flex-row">
+                            <select
+                            value={formData.billingPeriod}
+                            onChange={(e) =>
+                                setFormData({ ...formData, billingPeriod: e.target.value })
+                            }
+                            >
+                                <option>Monthly</option>
+                                <option>Yearly</option>
+                                <option>Weekly</option>
+                            </select>
+                            <input
+                            type="date"
+                            placeholder="Next Payment"
+                            value={formData.nextPayment}
+                            onChange={(e) =>
+                                setFormData({ ...formData, nextPayment: e.target.value })
+                            }
+                            />
+                        </div>
+                        <button className="Modal-Btn"
+                        onClick={() => {
+                            addSubscription();
+                            setShowModal(false);
+                        }}
+                        >
+                        Submit
+                        </button>
+                    </div>
+                    </div>
+                </div>
+            )}
         </div>
     </div>
   );
