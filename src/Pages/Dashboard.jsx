@@ -29,6 +29,7 @@ export default function Dashboard() {
   const [editingID, setEditingID] = useState(null);
   const [editData, setEditData] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [stats, setStats] = useState(null);
 
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
@@ -41,10 +42,48 @@ export default function Dashboard() {
       );
 
       const unsubscribe = onSnapshot(q, (snapshot) => {
-        setSubscriptions(
-          snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-        );
-      });
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setSubscriptions(data);
+
+        // Compute Summary Stats
+        if (data.length > 0) {
+            const total = data.length;
+            const costs = data.map((s) => parseFloat(s.cost) || 0);
+
+            const average = costs.reduce((a,b) => a + b, 0) / total;
+
+            // Estimate monthly cost
+            const monthly = data.reduce((sum, s) => {
+                const cost = parseFloat(s.cost) || 0;
+                switch(s.billingPeriod?.toLowerCase()) {
+                    case "yearly":
+                        return sum + cost / 12;
+                    case "weekly":
+                        return sum + cost * 4.33;
+                    case "monthly":
+                    default:
+                        return sum + cost;
+                }
+            }, 0);
+
+            const sorted = [...data].sort(
+                (a,b) => parseFloat(a.cost) - parseFloat(b.cost)
+            );
+
+            setStats({
+                total,
+                average: average.toFixed(2),
+                monthly: monthly.toFixed(2),
+                most: sorted[sorted.length - 1]?.name || "N/A",
+                least: sorted[0]?.name || "N/A",
+            });
+        } else {
+            setStats(null);
+        }
+    });
 
       return () => unsubscribe();
     }
@@ -115,6 +154,23 @@ const saveEdit = async (id) => {
             <div style={{ textAlign: "right", marginBottom: "20px" }}>
                 <button className="Add-Subscription-Btn" onClick={() => setShowModal(true)}>+ Add Subscription</button>
             </div>
+
+            {stats && (
+                <div style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: "10px",
+                    marginBottom: "20px",
+                    flexWrap: "wrap"
+                }}
+                >
+                    <div className="card">Total: <br />{stats.total}</div>
+                    <div className="card">Avg Cost: <br />${stats.average}</div>
+                    <div className="card">Avg Monthly: <br />${stats.monthly}</div>
+                    <div className="card">Most Expensive: <br />{stats.most}</div>
+                    <div className="card">Least Expensive: <br />{stats.least}</div>
+                </div>
+            )}
 
             <h2>Your Subscriptions</h2>
             <table>
