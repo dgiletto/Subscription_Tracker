@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Navbar.css";
 import trackr_logo from '../Images/trakr_logo.png';
 
@@ -62,17 +62,20 @@ export default function Navbar() {
       <nav className="navbar">
         <div className="navbar-left">
           <img src={trackr_logo} className="navbar-logo" alt=""/>
-          <div className="navbar-title">Trackr</div>
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            <div className="navbar-title">Trackr</div>
+          </Link>
         </div>
         <div className="navbar-auth">
           {user ? (
             <>
               <span className="user-name">{user.displayName || user.email}</span>
+              <button className="offset-btn" onClick={() => navigate("/dashboard")}>Dashboard</button>
               <button onClick={logout}>Logout</button>
             </>
           ) : (
             <>
-              <button className="login" onClick={() => { setIsSignup(false); setShowForm(true); }}>
+              <button className="offset-btn" onClick={() => { setIsSignup(false); setShowForm(true); }}>
                 Login
               </button>
               <button onClick={() => { setIsSignup(true); setShowForm(true); }}>

@@ -37,7 +37,7 @@
   background-color: black;
 }
 
-.navbar-auth .login {
+.navbar-auth .offset-btn {
   padding: 8px 14px;
   background-color: white;
   color: black;
@@ -47,7 +47,7 @@
   margin-left: 10px;
 }
 
-.navbar-auth .login:hover {
+.navbar-auth .offset-btn:hover {
   background-color: #eee;
 }
 
