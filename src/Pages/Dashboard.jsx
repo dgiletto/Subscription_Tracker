@@ -43,6 +43,11 @@ export default function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [stats, setStats] = useState(null);
   const [activeIndex, setActiveIndex] = useState(null);
+  const [filterCategory, setFilterCategory] = useState("All");
+  const [filterPeriod, setFilterPeriod] = useState("All");
+  const [sortKey, setSortKey] = useState("nextPayment"); // e.g., name, cost
+  const [sortDirection, setSortDirection] = useState("asc"); // or "desc"
+
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA66CC"];
 
@@ -262,6 +267,34 @@ const renderActiveShape = (props) => {
 
 };
 
+const filteredSubs = subscriptions
+    .filter((sub) => {
+        const matchCategory = 
+            filterCategory === "All" || sub.category === filterCategory;
+        const matchPeriod = 
+            filterPeriod === "All" || sub.billingPeriod === filterPeriod;
+        return matchCategory && matchPeriod;
+    })
+    .sort((a,b) => {
+        let aVal = a[sortKey];
+        let bVal = b[sortKey];
+
+        if (sortKey === "cost") {
+            aVal = parseFloat(aVal);
+            bVal = parseFloat(bVal);
+        } else if (sortKey === "nextPayment") {
+            aVal = new Date(aVal);
+            bVal = new Date(bVal);
+        } else {
+            aVal = (aVal || "").toString().toLowerCase();
+            bVal = (bVal || "").toString().toLowerCase();
+        }
+
+        if (aVal < bVal) return sortDirection === "asc" ? -1 : 1;
+        if (aVal > bVal) return sortDirection === "asc" ? 1 : -1;
+        return 0;
+    });
+
   return (
     <div>
         <Navbar />
@@ -335,6 +368,38 @@ const renderActiveShape = (props) => {
             </div>
 
             <h2>Your Subscriptions</h2>
+
+            <div style={{ display: "flex", gap: "15px", marginBottom: "10px", flexWrap: "wrap", justifyContent: "flex-end" }}>
+                {/* Filter By Category */}
+                <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
+                    <option value="All">All Categories</option>
+                    {[...new Set(subscriptions.map((s) => s.category))].map((cat) => (
+                        <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                </select>
+
+                {/* Filter by Billing Period */}
+                <select value={filterPeriod} onChange={(e) => setFilterPeriod(e.target.value)}>
+                    <option value="All">All Billing Periods</option>
+                    {[...new Set(subscriptions.map((s) => s.billingPeriod))].map((period) => (
+                        <option key={period} value={period}>{period}</option>
+                    ))}
+                </select>
+
+                {/* Sort Key */}
+                <select value={sortKey} onChange={(e) => setSortKey(e.target.value)}>
+                    <option value="name">Name</option>
+                    <option value="cost">Cost</option>
+                    <option value="nextPayment">Next Payment</option>
+                </select>
+
+                {/* Sort Direction */}
+                <select value={sortDirection} onChange={(e) => setSortDirection(e.target.value)}>
+                    <option value="asc">↑ Ascending</option>
+                    <option value="desc">↓ Descending</option>
+                </select>
+            </div>
+
             <table>
                 <thead>
                     <tr>
@@ -347,7 +412,7 @@ const renderActiveShape = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {subscriptions.map((sub) => (
+                    {filteredSubs.map((sub) => (
                     <tr key={sub.id}>
                         {editingID === sub.id ? (
                         <>
