@@ -2,12 +2,12 @@
     padding: 50px;
     text-align: center;
     background-color: #f4f4f4;
-    height: 100vh;
+    height: auto;
 }
 
 table {
     border-collapse: collapse;
-    margin: 25px 0;
+    margin: 25px 0px;
     font-size: 0.9em;
     min-width: 400px;
     width: 100%;
