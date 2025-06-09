@@ -21,6 +21,11 @@ import {
   ResponsiveContainer,
   Sector,
   Cell,
+  BarChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Bar
 } from "recharts";
 
 export default function Dashboard() {
@@ -50,6 +55,34 @@ export default function Dashboard() {
   const chartData = Object.entries(categoryData).map(([key, value]) => ({
     name: key,
     value,
+  }));
+
+  const costPerCategory = {};
+
+  subscriptions.forEach((sub) => {
+    const cat = sub.category || "Uncategorized";
+    const rawCost = parseFloat(sub.cost) || 0;
+    
+    // Adjust based on billing period
+    let monthlyCost = rawCost;
+    switch ((sub.billingPeriod || "").toLowerCase()) {
+        case "yearly":
+            monthlyCost = rawCost / 12;
+            break;
+        case "weekly":
+            monthlyCost = rawCost * 4.33;
+            break;
+        case "monthly":
+        default:
+            monthlyCost = rawCost;
+    }
+
+    costPerCategory[cat] = (costPerCategory[cat] || 0) + monthlyCost;
+  });
+
+  const barChartData = Object.entries(costPerCategory).map(([key, value]) => ({
+    category: key,
+    cost: parseFloat(value.toFixed(2))
   }));
 
   useEffect(() => {
@@ -246,7 +279,7 @@ const renderActiveShape = (props) => {
                     flexWrap: "wrap"
                 }}
                 >
-                    <div className="card">Total: <br />{stats.total}</div>
+                    <div className="card">Total Items: <br />{stats.total}</div>
                     <div className="card">Avg Cost: <br />${stats.average}</div>
                     <div className="card">Avg Monthly: <br />${stats.monthly}</div>
                     <div className="card">Most Expensive: <br />{stats.most}</div>
@@ -254,30 +287,51 @@ const renderActiveShape = (props) => {
                 </div>
             )}
 
-            <div style={{ width: "100%", height: 300, marginBottom: "30px" }}>
-                <ResponsiveContainer>
-                    <PieChart>
-                    <Pie
-                        data={chartData}
-                        dataKey="value"
-                        nameKey="name"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={90}
-                        innerRadius={40}
-                        paddingAngle={3}
-                        labelLine={false}
-                        isAnimationActive={true}
-                        activeIndex={activeIndex}
-                        activeShape={renderActiveShape}
-                        onMouseEnter={(_, index) => setActiveIndex(index)}
-                    >
-                        {chartData.map((_, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                    </Pie>
-                    </PieChart>
-                </ResponsiveContainer>
+            <div style={{ display: "flex", gap: "20px", marginBottom: "100px", flexWrap: "wrap" }}>
+                {/* Bar Chart */}
+                <div style = {{ flex: 1, minWidth: "300px", height: 300 }}>
+                    <h4>Cost Per Category Per Month</h4>
+                    <ResponsiveContainer>
+                        <BarChart data={barChartData} layout="vertical" margin={{ left: 50 }}>
+                            <XAxis type="number" />
+                            <YAxis type="category" dataKey="category" />
+                            <Tooltip />
+                            <Bar dataKey="cost">
+                                {barChartData.map((entry, index) => (
+                                    <Cell key={`bar-cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Bar>
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+
+                {/* Pie Chart */}
+                <div style= {{ flex: 1, minWidth: "300px", height: 300 }}>
+                    <h4>Category Make-up</h4>
+                    <ResponsiveContainer>
+                        <PieChart>
+                        <Pie
+                            data={chartData}
+                            dataKey="value"
+                            nameKey="name"
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={90}
+                            innerRadius={40}
+                            paddingAngle={3}
+                            labelLine={false}
+                            isAnimationActive={true}
+                            activeIndex={activeIndex}
+                            activeShape={renderActiveShape}
+                            onMouseEnter={(_, index) => setActiveIndex(index)}
+                        >
+                            {chartData.map((_, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                        </Pie>
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
             </div>
 
             <h2>Your Subscriptions</h2>
