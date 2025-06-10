@@ -40,4 +40,4 @@
 Made by Dylan Giletto
 [Portfolio](https://portfolio-dgilettos-projects.vercel.app/) | [LinkedIn](https://www.linkedin.com/in/dylan-giletto-775789269/) | [Github](https://github.com/dgiletto)
 
-Link to the Web App: https://subscription-trackr.netlify.app/
+Link to the Web App: https://subscription-trakr.netlify.app/
