@@ -2,7 +2,6 @@
 
 **Trakr** is a modern web application that helps users track, manage, and visualize their recurring subscriptions. It allows users to monitor their monthly spending, stay informed about upcoming payments, and discover where they can save money.
 
----
 
 ## Features
 - **Authentication** with Email/Password and Google via Firebase
@@ -15,7 +14,6 @@
 - **User Specific Firestore Storage**: Each user sees only their own data
 - **Routing** with protected access to the dashboard after login
 
----
 
 ## Tech Stack
 
@@ -29,19 +27,17 @@
 ### Dev Tools
 - **Create React App (CRA)** - For bootstrapping the React App
 - **React Hooks** - For state and effect management
-- **Netliy** - For deployment
+- **Netlify** - For deployment
 
----
 
 ## Future Enhancements
 - Payment Reminders via email
 - Subscription import from bank data or emails
 - Premium Tier for smarter insights
 
----
 
 ## Author
 Made by Dylan Giletto
 [Portfolio](https://portfolio-dgilettos-projects.vercel.app/) | [LinkedIn](https://www.linkedin.com/in/dylan-giletto-775789269/) | [Github](https://github.com/dgiletto)
 
-Link to the Web App: 
+Link to the Web App: https://subscription-trackr.netlify.app/
