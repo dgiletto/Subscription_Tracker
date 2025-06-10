@@ -60,10 +60,12 @@ tbody tr:last-of-type {
     cursor: pointer;
     border-radius: 4px;
     margin-left: 10px;
+    transition: all ease-in-out 0.3s;
 }
 
 .Add-Subscription-Btn:hover {
-    background-color: black;
+    background-color: #9f00ff;
+    transition: all ease-in-out 0.3s;
 }
 
 .Modal-Btn {

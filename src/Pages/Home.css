@@ -2,7 +2,7 @@
   padding: 50px;
   text-align: center;
   background-color: #f4f4f4;
-  height: 100vh;
+  height: auto;
 }
 
 .home-container h1 {
@@ -13,4 +13,25 @@
 .home-container p {
   font-size: 1.2rem;
   color: black;
+}
+
+.get-started {
+  padding: 8px 14px;
+  background-color: #1f1f1f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  margin-bottom: 50px;
+  transition: all ease-in-out 0.3s;
+}
+
+.get-started:hover {
+  background-color: #9f00ff;
+  transition: all ease-in-out 0.3s;
+}
+
+b {
+  color: #9f00ff
 }
