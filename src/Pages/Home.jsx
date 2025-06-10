@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 const provider = new GoogleAuthProvider();
 
 export default function Home() {
-  const [user, setUser] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState("");
@@ -25,7 +24,7 @@ export default function Home() {
   const navigate = useNavigate();
   
   useEffect(() => {
-    const unsub = auth.onAuthStateChanged((u) => setUser(u));
+    const unsub = auth.onAuthStateChanged(() => {});
     return () => unsub();
   }, []);
   
