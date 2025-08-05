@@ -11,7 +11,7 @@ const subscriptionSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
     uid: {type: String, required: true, unique: true},
-    subscriptions: [subscriptionSchema]
+    subscriptions: {type: [subscriptionSchema], default: []}
 });
 
 const User = mongoose.model("User", userSchema);

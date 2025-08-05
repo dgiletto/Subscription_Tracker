@@ -52,13 +52,18 @@ export const updateSubscription = async (req, res) => {
 // Delete a subscription
 export const deleteSubscription = async (req, res) => {
     try {
-        let user = await User.findOne({ uid: req.uid });
+        const { subId } = req.params;
+        const user = await User.findOne({ uid: req.uid });
         if (!user) return res.status(404).send("User not found");
 
-        user.subscriptions = user.subscriptions.filter(
-            s => s._id.toString() !== req.subId
+        const subIndex = user.subscriptions.findIndex(
+            s => s._id.toString() === subId
         );
+        if (subIndex === -1) return res.status(404).send("Subscription not found");
+
+        user.subscriptions.splice(subIndex, 1);
         await user.save();
+
         res.sendStatus(204);
     } catch (error) {
         console.log(error.message);
