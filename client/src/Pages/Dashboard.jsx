@@ -36,7 +36,7 @@ export default function Dashboard() {
   const [sortKey, setSortKey] = useState("nextPayment");
   const [sortDirection, setSortDirection] = useState("asc");
 
-  const API_URL = "http://localhost:5000/api";
+  const API_URL = "https://subscription-tracker-qg48.onrender.com/api";
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA66CC"];
 
