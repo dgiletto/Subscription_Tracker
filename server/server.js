@@ -12,9 +12,8 @@ const server = http.createServer(app);
 // Middleware setup
 app.use(express.json());
 app.use(cors({
-    origin: ["https://subscription-trakr.netlify.app/"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
+    origin: ["https://subscription-trakr.netlify.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 
 // Routes Setup
