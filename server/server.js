@@ -11,7 +11,11 @@ const server = http.createServer(app);
 
 // Middleware setup
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: ["https://subscription-trakr.netlify.app/"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 
 // Routes Setup
 app.use("/api/status", (req, res) => res.send("Server is live"));
