@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import "./Navbar.css";
-import trackr_logo from '../Images/trakr_logo.png';
+import trackr_logo from '../Images/trakr_logo.svg';
 
 const provider = new GoogleAuthProvider();
 

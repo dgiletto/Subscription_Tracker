@@ -2,6 +2,8 @@ import { auth } from "../firebase";
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar.jsx";
+import AddSubscriptionModal from "../Components/AddSubscriptionModal.jsx";
+import { Plus } from 'lucide-react';
 import "./Dashboard.css";
 import {
   PieChart,
@@ -269,7 +271,8 @@ export default function Dashboard() {
       <Navbar />
       <div className="dashboard-container">
         <div style={{ textAlign: "right", marginBottom: "20px" }}>
-          <button className="Add-Subscription-Btn" onClick={() => setShowModal(true)}>+ Add Subscription</button>
+          <button className="Add-Subscription-Btn" onClick={() => setShowModal(true)}>
+            <span><Plus size={16} className="plus-icon"/> Add Subscription</span></button>
         </div>
 
         {stats && (
@@ -408,42 +411,12 @@ export default function Dashboard() {
         </table>
 
         {showModal && (
-          <div style={{
-            position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
-            backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000,
-          }}>
-            <div style={{
-              backgroundColor: "#fff", padding: "30px", borderRadius: "10px", width: "400px", position: "relative",
-            }}>
-              <button onClick={() => setShowModal(false)} style={{
-                position: "absolute", top: "10px", right: "10px",
-                background: "transparent", color: "red", border: "none",
-                fontSize: "18px", cursor: "pointer",
-              }}>✖</button>
-              <h2 className="header">Add Subscription</h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                <input type="text" placeholder="Name" value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
-                <input type="text" placeholder="Category" value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })} />
-                <input type="number" placeholder="Cost" value={formData.cost}
-                  onChange={(e) => setFormData({ ...formData, cost: e.target.value })} />
-                <div className="flex-row">
-                  <select value={formData.billingPeriod}
-                    onChange={(e) => setFormData({ ...formData, billingPeriod: e.target.value })}>
-                    <option>Monthly</option>
-                    <option>Yearly</option>
-                    <option>Weekly</option>
-                  </select>
-                  <input type="date" placeholder="Next Payment" value={formData.nextPayment}
-                    onChange={(e) => setFormData({ ...formData, nextPayment: e.target.value })} />
-                </div>
-                <button className="Modal-Btn" onClick={() => { addSubscription(); setShowModal(false); }}>
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
+          <AddSubscriptionModal
+            formData={formData}
+            setFormData={setFormData}
+            addSubscription={addSubscription}
+            setShowModal={setShowModal}
+          />
         )}
 
       </div>

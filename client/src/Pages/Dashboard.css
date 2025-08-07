@@ -63,6 +63,12 @@ tbody tr:last-of-type {
     transition: all ease-in-out 0.3s;
 }
 
+.Add-Subscription-Btn span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 .Add-Subscription-Btn:hover {
     background-color: #9f00ff;
     transition: all ease-in-out 0.3s;
