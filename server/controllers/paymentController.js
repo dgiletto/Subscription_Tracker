@@ -1,4 +1,4 @@
-import { calculateNextPayment } from "../lib/paymentCalculator";
+import { calculateNextPayment } from "../lib/paymentCalculator.js";
 import User from '../models/User.js';
 
 // Update a single user's subscriptions if there are any payments past due
