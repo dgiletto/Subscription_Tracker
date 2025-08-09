@@ -1,39 +1,50 @@
-# Trakr - Subscription Tracker Web App
+# Trakr - Subscription Management App
 
-**Trakr** is a modern web application that helps users track, manage, and visualize their recurring subscriptions. It allows users to monitor their monthly spending, stay informed about upcoming payments, and discover where they can save money.
+A modern, full-stack web application for tracking and managing your recurring subscriptions. Built with React, Node.js, Express, MongoDB, and Firebase Authentication.
 
+![Dashboard Preview](./client/src/Images/dashboard.png)
 
-## Features
-- **Authentication** with Email/Password and Google via Firebase
-- **Add/Edit/Delete Subscriptions** with fields: name, category, billing period, cost, and next payment date
-- **Track Subscription Details** with a responsive table and filters
-- **Visual Insights**:
-    - Cards displaying total subscriptions, average cost, and more
-    - Pie chart showing category distribution
-    - Bar chart showing total monthly cost by catergory
-- **User Specific Firestore Storage**: Each user sees only their own data
-- **Routing** with protected access to the dashboard after login
+## 🌟 Features
+### 📊 Dashboard Analytics
+- **Comprehensive Analytics:** Track total subscriptions, average costs, and monthly spending
+- **Visual Charts:** Interactive pie charts and bar charts showing category breakdown
+- **Cost Analysis:** View spending patterns across different subscription categories
 
+### 💼 Subscription Management
+- **Add Subscriptions:** Easy-to-use modal for adding new subscriptions
+- **Edit & Delete:** Inline editing with intuitive controls
+- **Categorization:** Organize subscriptions by Entertainment, Productivity, Health & Fitness, and more
+- **Billing Periods:** Support for weekly, monthly, and yearly billing cycles
 
-## Tech Stack
+### 🔍 Filtering & Sorting
+- **Category Filters:** Filter subscriptions by category
+- **Billing Period Filters:** View subscriptions by billing frequency
+- **Sorting Options:** Sort by name, cost, or next payment date
+- **Real-Time Updates:** Automatic payment date calculations
 
+### 🔐 Authentication
+- **Firebase Auth:** Secure authentication with Google OAuth and email/password
+- **Protected Routes:** User-specific data with secure API endpoints
+- **Session Management:** Persistent login state across browser sessions
+
+## 🛠️ Tech Stack
 ### Frontend
-- **React** - UI Framework
-- **React Router** - For client-side routing
-- **Firebase Auth** - user login, sign-up, and session management
-- **Firebase Firestore** - cloud database for user subscription data
-- **HTML/CSS** - for clean and flexible styling
+- **React 18:** Modern UI library with hooks
+- **React Router:** Client-side routing
+- **Recharts:** Interactive data visualization
+- **Lucide React:** Beautiful icon library
+- **CSS3:** Custom styling with animations and responsive design
 
-### Dev Tools
-- **Create React App (CRA)** - For bootstrapping the React App
-- **React Hooks** - For state and effect management
-- **Netlify** - For deployment
+## Backend
+- **Node.js:** Javascript runtime
+- **Express.js:** Web application framework
+- **MongoDB:** NoSQL database with Mongoose ODM
+- **Firebase Admin SDK:** Authentication and authorization
 
-
-## Future Enhancements
-- Payment Reminders via email
-- Subscription import from bank data or emails
-- Premium Tier for smarter insights
+## Authentication & Security
+- **Firebase Authentication:** User management and OAuth
+- **JWT Token Verification:** Secure API endpoints
+- **CORS:** Cross-origin resource sharing configuration
 
 
 ## Author
