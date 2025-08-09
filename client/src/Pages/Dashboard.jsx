@@ -43,6 +43,62 @@ export default function Dashboard() {
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA66CC"];
 
+  // Update Next Payments of Subscriptions from Express API
+  const updatePayments = useCallback(async () => {
+    if (!auth.currentUser) return;
+
+    try {
+      const token = await auth.currentUser.getIdToken();
+      const res = await fetch(`${API_URL}/auth/update-payments`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`}
+      });
+
+      if (res.ok) {
+        const updatedSubscriptions = await res.json();
+        setSubscriptions(updatedSubscriptions);
+
+        // Update stats after payment updates
+        if (updatedSubscriptions.length > 0) {
+          const total = updatedSubscriptions.length;
+          const costs = updatedSubscriptions.map((s) => parseFloat(s.cost) || 0);
+          const average = costs.reduce((a, b) => a + b, 0) / total;
+          const monthly = updatedSubscriptions.reduce((sum, s) => {
+            const cost = parseFloat(s.cost) || 0;
+            switch (s.billingPeriod?.toLowerCase()) {
+              case "yearly":
+                return sum + cost / 12;
+              case "weekly":
+                return sum + cost * 4.33;
+              case "monthly":
+              default:
+                return sum + cost;
+            }
+          }, 0);
+          const sorted = [...updatedSubscriptions].sort(
+            (a, b) => parseFloat(a.cost) - parseFloat(b.cost)
+          );
+          setStats({
+            total,
+            average: average.toFixed(2),
+            monthly: monthly.toFixed(2),
+            most: sorted[sorted.length - 1]?.name || "N/A",
+            least: sorted[0]?.name || "N/A",
+          });
+        } else {
+          setStats(null);
+        }
+      } else if (res.status === 404) {
+        const message = await res.text();
+        if (message === "No subscriptions found") {
+          console.log("No subscriptions to update");
+        }
+      }
+    } catch (error) {
+      console.error("Error updating payment dates:", error);
+    }
+  }, [API_URL]);
+
   // Fetch subscriptions from Express API
   const fetchSubscriptions = useCallback(async () => {
     if (!auth.currentUser) return;
@@ -196,11 +252,11 @@ export default function Dashboard() {
       if (!user) {
         navigate("/");
       } else {
-        fetchSubscriptions();
+        updatePayments();
       }
     });
     return () => unsub();
-  }, [navigate, fetchSubscriptions]);
+  }, [navigate, updatePayments]);
 
   const renderActiveShape = (props) => {
     const RADIAN = Math.PI / 180;

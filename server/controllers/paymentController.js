@@ -10,6 +10,7 @@ export const updateSubscriptionsForUser = async (req, res) => {
         if (user.subscriptions.length === 0) {
             return res.status(404).send("No subscriptions found");
         }
+        let updatedCount = 0;
 
         for (const sub of user.subscriptions) {
             const today = new Date();
@@ -17,9 +18,15 @@ export const updateSubscriptionsForUser = async (req, res) => {
 
             if (nextPayment <= today) {
                 sub.nextPayment = calculateNextPayment(nextPayment, sub.billingPeriod);
-                await user.save();
+                updatedCount++;
             }
         }
+
+        if (updatedCount > 0) {
+            await user.save();
+            console.log(`Updated ${updatedCount} subscription payment dates for user ${req.uid}`);
+        }
+
         res.json(user.subscriptions);
     } catch (error) {
         console.error("Error updating payment dates:", error);
