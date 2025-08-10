@@ -1,25 +1,17 @@
 import { useEffect, useState } from "react";
 import { auth } from "../firebase";
 import {
-  GoogleAuthProvider,
-  signInWithPopup,
   signOut,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import "./Navbar.css";
 import trackr_logo from '../Images/trakr_logo.svg';
-
-const provider = new GoogleAuthProvider();
+import LoginModal from "./LoginModal.jsx";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -27,33 +19,6 @@ export default function Navbar() {
     const unsub = auth.onAuthStateChanged((u) => setUser(u));
     return () => unsub();
   }, []);
-
-  const loginWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, provider);
-      setShowForm(false);
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleAuth = async () => {
-    try {
-      if (isSignup) {
-        await createUserWithEmailAndPassword(auth, email, password);
-      } else {
-        await signInWithEmailAndPassword(auth, email, password);
-      }
-      setShowForm(false);
-      setEmail("");
-      setPassword("");
-      setError("");
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err.message);
-    }
-  };
 
   const logout = () => signOut(auth);
 
@@ -87,29 +52,12 @@ export default function Navbar() {
       </nav>
 
       {showForm && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>{isSignup ? "Sign Up" : "Login"}</h2>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            /><br />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            /><br />
-            {error && <p className="error">{error}</p>}
-            <button onClick={handleAuth}>
-              {isSignup ? "Create Account" : "Login"}
-            </button>
-            <button onClick={loginWithGoogle}>Login with Google</button><br />
-            <button className="close-btn" onClick={() => setShowForm(false)}>Close</button>
-          </div>
-        </div>
+        <LoginModal
+          showForm={showForm}
+          setShowForm={setShowForm}
+          isSignup={isSignup}
+          setIsSignup={setIsSignup}
+        />
       )}
     </>
   );

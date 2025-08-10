@@ -150,7 +150,11 @@ export default function SubscriptionTable({
                       </div>
                     </td>
                     <td className="table-cell">
-                      <div className="next-payment">
+                      <div 
+                        className="next-payment"
+                        style={{
+                          color: (new Date(sub.nextPayment) - new Date()) / (1000 * 60 * 60 * 24) <= 7 ? "red" : "inherit"
+                        }}>
                         <Calendar size={14} />
                         {new Date(sub.nextPayment).toLocaleDateString()}
                       </div>

@@ -1,4 +1,4 @@
-# Trakr - Subscription Management App
+# Trackr - Subscription Management App
 
 A modern, full-stack web application for tracking and managing your recurring subscriptions. Built with React, Node.js, Express, MongoDB, and Firebase Authentication.
 

@@ -23,6 +23,13 @@
   font-weight: bold;
 }
 
+.navbar-title:hover {
+  background: linear-gradient(135deg, #8b5cf6, #a855f7, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .navbar-auth button {
   padding: 8px 14px;
   background-color: #1f1f1f;
@@ -54,50 +61,4 @@
 .navbar-auth .username {
   margin-right: 10px;
   font-weight: 500;
-}
-
-/* Login Modal */
-.modal {
-  position: fixed;
-  z-index: 10;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-  width: 300px;
-}
-
-.modal-content input {
-  width: 90%;
-  margin: 10px 0;
-  padding: 8px;
-}
-
-.modal-content button {
-  margin: 10px 5px;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.error {
-  color: red;
-  font-size: 0.9em;
-}
-
-.close-btn {
-  background-color: #ccc;
-  color: black;
-  border-radius: 4px;
 }
